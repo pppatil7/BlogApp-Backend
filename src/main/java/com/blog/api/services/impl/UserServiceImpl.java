@@ -1,6 +1,7 @@
 package com.blog.api.services.impl;
 
 import com.blog.api.entities.User;
+import com.blog.api.exceptions.ResourceNotFoundException;
 import com.blog.api.payloads.UserDto;
 import com.blog.api.repositories.UserRepository;
 import com.blog.api.services.UserService;
@@ -22,6 +23,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto updateUserByUserId(UserDto userDto, Long userId) {
+        User user = this.userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User", " Id ", userId));
         return null;
     }
 
