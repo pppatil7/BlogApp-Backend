@@ -8,6 +8,7 @@ import com.blog.api.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class UserServiceImpl implements UserService {
 
@@ -24,22 +25,32 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto updateUserByUserId(UserDto userDto, Long userId) {
         User user = this.userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User", " Id ", userId));
-        return null;
+        user.setUserId(userDto.getUserId());
+        user.setUserName(userDto.getUserName());
+        user.setUserEmail(userDto.getUserEmail());
+        user.setUserPassword(userDto.getUserPassword());
+        user.setUserAbout(userDto.getUserAbout());
+        User updatedUser = this.userRepository.save(user);
+        return this.userToDto(updatedUser);
     }
 
     @Override
     public UserDto getUserByUserId(Long userId) {
-        return null;
+        User user = this.userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User", " Id ", userId));
+        return this.userToDto(user);
     }
 
     @Override
     public List<UserDto> getAllUsers() {
-        return List.of();
+        List<User> users = this.userRepository.findAll();
+        List<UserDto> userDtos = users.stream().map(user -> this.userToDto(user)).collect(Collectors.toList());
+        return userDtos;
     }
 
     @Override
     public void deleteUserByUserId(Long userId) {
-
+        User user = this.userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User", " Id ", userId));
+        this.userRepository.delete(user);
     }
 
 
