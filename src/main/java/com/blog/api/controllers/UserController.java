@@ -2,6 +2,7 @@ package com.blog.api.controllers;
 
 import com.blog.api.payloads.UserDto;
 import com.blog.api.services.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,14 +19,14 @@ public class UserController {
 
     //POST - CREATE USER
     @PostMapping("/")
-    public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto) {
+    public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto userDto) {
         UserDto createdUserDto = userService.createUser(userDto);
         return new ResponseEntity<>(createdUserDto, HttpStatus.CREATED);
     }
 
     //PUT - UPDATE USER
     @PutMapping("/{userId}")
-    public ResponseEntity<UserDto> updateUserByUserId(@RequestBody UserDto userDto, @PathVariable Long userId) {
+    public ResponseEntity<UserDto> updateUserByUserId(@Valid @RequestBody UserDto userDto, @PathVariable Long userId) {
         UserDto updatedUserDto = this.userService.updateUserByUserId(userDto, userId);
         return ResponseEntity.ok(updatedUserDto);
     }
