@@ -1,22 +1,15 @@
-package com.blog.api.entities;
+package com.blog.api.payloads;
 
-import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
 
-@Entity
 @Getter
 @Setter
 @NoArgsConstructor
-public class Post {
-
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long postId;
+public class PostDto {
 
     private String postTitle;
 
@@ -26,11 +19,7 @@ public class Post {
 
     private Date postAddedDate;
 
-    @ManyToOne
-    private Category category;
+    private CategoryDto category;
 
-    @ManyToOne
-    private User user;
-
-
+    private UserDto user;
 }
