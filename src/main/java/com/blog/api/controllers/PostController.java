@@ -51,5 +51,19 @@ public class PostController {
         return ResponseEntity.ok(post);
     }
 
+    //delete
+    @DeleteMapping("/posts/{postId}")
+    public ResponseEntity<?> deletePostByPostId(@PathVariable Long postId) {
+        this.postService.deletePostByPostId(postId);
+        return ResponseEntity.noContent().build();
+    }
+
+    //update
+    @PutMapping("/posts/{postId}")
+    public ResponseEntity<PostDto> updatePostByPostId(@RequestBody PostDto postDto, @PathVariable Long postId) {
+        PostDto post = this.postService.updatePostByPostId(postDto, postId);
+        return ResponseEntity.ok(post);
+    }
+
 
 }
