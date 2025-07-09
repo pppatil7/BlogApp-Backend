@@ -37,5 +37,19 @@ public class PostController {
         return ResponseEntity.ok(posts);
     }
 
+    //get all posts
+    @GetMapping("/posts")
+    public ResponseEntity<List<PostDto>> getAllPosts() {
+        List<PostDto> posts = this.postService.getAllPost();
+        return ResponseEntity.ok(posts);
+    }
+
+    //get single post by post id
+    @GetMapping("/posts/{postId}")
+    public ResponseEntity<PostDto> getSinglePostByPostId(@PathVariable Long postId) {
+        PostDto post = this.postService.getSinglePostByPostId(postId);
+        return ResponseEntity.ok(post);
+    }
+
 
 }

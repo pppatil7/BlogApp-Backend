@@ -11,6 +11,8 @@ import java.util.Date;
 @NoArgsConstructor
 public class PostDto {
 
+    private Long postId;
+
     private String postTitle;
 
     private String postContent;
