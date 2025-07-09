@@ -1,6 +1,7 @@
 package com.blog.api.controllers;
 
 import com.blog.api.payloads.PostDto;
+import com.blog.api.payloads.PostResponse;
 import com.blog.api.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -39,12 +40,12 @@ public class PostController {
 
     //get all posts
     @GetMapping("/posts")
-    public ResponseEntity<List<PostDto>> getAllPosts(
-            @RequestParam(value = "pageNumber",defaultValue = "0",required = false) Integer pageNumber,
-            @RequestParam(value = "pageSize",defaultValue = "2",required = false) Integer pageSize
+    public ResponseEntity<PostResponse> getAllPosts(
+            @RequestParam(value = "pageNumber", defaultValue = "0", required = false) Integer pageNumber,
+            @RequestParam(value = "pageSize", defaultValue = "2", required = false) Integer pageSize
     ) {
-        List<PostDto> posts = this.postService.getAllPost(pageNumber,pageSize);
-        return ResponseEntity.ok(posts);
+        PostResponse postResponse = this.postService.getAllPost(pageNumber, pageSize);
+        return ResponseEntity.ok(postResponse);
     }
 
     //get single post by post id
