@@ -11,6 +11,9 @@ import com.blog.api.repositories.UserRepository;
 import com.blog.api.services.PostService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -53,7 +56,7 @@ public class PostServiceImpl implements PostService {
         post.setPostContent(postDto.getPostContent());
         post.setPostImageName(postDto.getPostImageName());
 
-        Post updatedPost = this.postRepository.save(post);  
+        Post updatedPost = this.postRepository.save(post);
         return this.modelMapper.map(updatedPost, PostDto.class);
     }
 
@@ -64,8 +67,11 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<PostDto> getAllPost() {
-        List<Post> posts = this.postRepository.findAll();
+    public List<PostDto> getAllPost(Integer pageNumber,Integer pageSize) {
+
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        Page<Post> postPage = this.postRepository.findAll(pageable);
+        List<Post> posts = postPage.getContent();
         List<PostDto> postDtos = posts.stream().map((post) -> this.modelMapper.map(post, PostDto.class)).collect(Collectors.toList());
         return postDtos;
     }
