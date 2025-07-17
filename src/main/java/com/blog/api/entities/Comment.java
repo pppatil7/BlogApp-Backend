@@ -1,11 +1,12 @@
 package com.blog.api.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
 public class Comment {
 
     @Id
@@ -13,6 +14,9 @@ public class Comment {
     private Long commentId;
 
     private String commentContent;
+
+    @ManyToOne
+    private Post post;
 
 
 }
